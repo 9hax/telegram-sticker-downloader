@@ -6,9 +6,9 @@ NOTE: You need a telegram bot token to make use of the script. You can easily ma
 
 ### Dependencies:
 
-- Webp converter library. (You can download the latest version from [here](https://storage.googleapis.com/downloads.webmproject.org/releases/webp/index.html))
+- FFmpeg (You can download a recent build of ffmpeg [here](https://www.ffmpeg.org/download.html).)
 
-- Python 3.6 (Haven't tested for other Python 3 versions.)
+- Python 3.6+ (tested up to Python 3.12.)
 
 ### Usage:
 
