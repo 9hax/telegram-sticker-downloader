@@ -127,9 +127,9 @@ class StickerDownloader:
     def convert_file(_input, _output_folder):
         file_name = "/" + os.path.basename(_input)
         if _input[-4:] == 'webp':
-            command = 'ffmpeg -i "{}" "{}"'.format(_input, _output_folder + file_name[:-4] + "png")
-        if _input[-4:] == 'webm':
-            command = 'ffmpeg -i "{}" "{}"'.format(_input, _output_folder + file_name[:-4] + "gif")
+            command = 'ffmpeg -n -hide_banner -loglevel error -i "{}" "{}"'.format(_input, _output_folder + file_name[:-4] + "png")
+        elif _input[-4:] == 'webm':
+            command = 'ffmpeg -n -hide_banner -loglevel error -i "{}" "{}"'.format(_input, _output_folder + file_name[:-4] + "gif")
         else:
             print("Encountered an unknown file type. Copying as-is.")
             shutil.copy(_input, _output_folder)
