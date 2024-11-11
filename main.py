@@ -113,7 +113,7 @@ class StickerDownloader:
 
     def download_sticker_set(self, sticker_set):
         swd = assure_folder_exists(sticker_set['name'], root=self.cwd)
-        download_path = assure_folder_exists('webp', root=swd)
+        download_path = assure_folder_exists('source', root=swd)
         downloads = []
 
         print('Starting download of "{}" into {}'.format(sticker_set['name'], download_path))
@@ -137,17 +137,17 @@ class StickerDownloader:
 
     def convert_to_pngs(self, name):
         swd = assure_folder_exists(name, root=self.cwd)
-        webp_folder = assure_folder_exists('webp', root=swd)
-        png_folder = assure_folder_exists('png', root=swd)
+        source_folder = assure_folder_exists('source', root=swd)
+        dest_folder = assure_folder_exists('converted', root=swd)
 
-        webp_files = [os.path.join(webp_folder, i) for i in os.listdir(webp_folder)]
+        source_files = [os.path.join(source_folder, i) for i in os.listdir(source_folder)]
         png_files = []
 
         print('Converting stickers to pngs "{}"..'.format(name))
         start = time.time()
         with ThreadPoolExecutor(max_workers=self.THREADS) as executor:
-            futures = [executor.submit(self.convert_file, _input, os.path.join(png_folder, random_filename(6, 'png')))
-                       for _input in webp_files]
+            futures = [executor.submit(self.convert_file, _input, dest_folder)
+                       for _input in source_files]
             for i in as_completed(futures):
                 png_files.append(i.result())
 
