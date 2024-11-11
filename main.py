@@ -167,6 +167,8 @@ if __name__ == "__main__":
             break
         names.append(name.split('/')[-1])
 
+    names = list(set(names)) # Deduplicate URLs
+
     for sset in names:
         print('=' * 60)
         _ = downloader.get_sticker_set(sset)
