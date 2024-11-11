@@ -1,3 +1,4 @@
+import shutil
 import requests
 import json
 import urllib.parse
@@ -5,8 +6,6 @@ from subprocess import check_output
 from concurrent.futures import as_completed, ThreadPoolExecutor
 import time
 import os
-import string
-import random
 
 TOKEN = ''
 
@@ -130,10 +129,17 @@ class StickerDownloader:
         return downloads
 
     @staticmethod
-    def convert_file(_input, _output):
-        command = 'dwebp -quiet "{}" -o "{}"'.format(_input, _output)
+    def convert_file(_input, _output_folder):
+        file_name = "/" + os.path.basename(_input)
+        if _input[-4:] == 'webp':
+            command = 'ffmpeg -i "{}" "{}"'.format(_input, _output_folder + file_name[:-4] + "png")
+        if _input[-4:] == 'webm':
+            command = 'ffmpeg -i "{}" "{}"'.format(_input, _output_folder + file_name[:-4] + "gif")
+        else:
+            print("Encountered an unknown file type. Copying as-is.")
+            shutil.copy(_input, _output_folder)
+            return
         check_output(command, shell=True)
-        return _output
 
     def convert_to_pngs(self, name):
         swd = assure_folder_exists(name, root=self.cwd)
