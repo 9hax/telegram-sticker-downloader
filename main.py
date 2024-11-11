@@ -18,11 +18,6 @@ def assure_folder_exists(folder, root):
         os.mkdir(full_path)
     return full_path
 
-
-def random_filename(length, ext):
-    return ''.join([random.choice(string.ascii_lowercase) for _ in range(length)]) + '.{}'.format(ext)
-
-
 # TODO: Replace with a named tuple
 class File:
     def __init__(self, name, link):
